@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 
 function InvoiceCard({ optician, amount, month }) {
   return (
-    <Card>
+    <Card className="shadow" >
       <Card.Body>
         <Card.Text>{optician}</Card.Text>
         <Card.Title>

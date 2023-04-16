@@ -46,7 +46,7 @@ function Register() {
         </Alert>
       </Container> */}
 
-      <Card className="m-auto" style={{ width: "20rem" }}>
+      <Card className="shadow m-auto" style={{ width: "20rem" }}>
         <Card.Body>
           <h4 className="mb-4 logo-end">
             {" "}
