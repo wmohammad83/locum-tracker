@@ -4,6 +4,8 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../features/auth/authSlice";
 
 import { FaUser, FaSignInAlt } from "react-icons/fa";
 
@@ -17,6 +19,12 @@ function Login() {
   // Destructuing
   const { username, password } = formData;
 
+  const dispatch = useDispatch();
+
+  const { user, isLoading, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -27,6 +35,11 @@ function Login() {
   const onSubmit = (e) => {
     e.preventDefault();
 
+    const userData = {
+      username,
+      password
+    }
+    dispatch(login(userData))
   };
 
   return (

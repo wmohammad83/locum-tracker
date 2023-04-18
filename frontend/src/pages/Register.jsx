@@ -4,6 +4,8 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
+import { useSelector, useDispatch } from "react-redux"
+import { register } from "../features/auth/authSlice";
 
 import { FaUser } from "react-icons/fa";
 
@@ -19,8 +21,11 @@ function Register() {
   });
 
   // Destructuing
-  const { username, email, firstname, lastname, password, password2 } =
-    formData;
+  const { username, email, firstname, lastname, password, password2 } = formData;
+
+const dispatch = useDispatch()
+
+const { user, isLoading, isSuccess, message } = useSelector(state => state.auth)
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -35,6 +40,15 @@ function Register() {
     if (password !== password2) {
       setShow(true);
       console.log("passwords dont match");
+    } else {
+      const userData = {
+        username,
+        email,
+        firstname,
+        lastname,
+        password
+      }
+      dispatch(register(userData))
     }
   };
 
