@@ -13,7 +13,7 @@ function Dashboard() {
   let [totalIncome, setTotalIncome] = useState(0);
 
   useEffect(() => {
-    const url = "http://localhost:1337/api/locum-days";
+    const url = "http://localhost:5001/api/locum-days";
     axios
       .get(url)
       .then(function (response) {

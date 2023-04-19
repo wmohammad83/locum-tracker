@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import { useSelector, useDispatch } from "react-redux";
-import { login } from "../features/auth/authSlice";
+import { login, reset } from "../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import Spinner from "../components/Spinner";
 
 import { FaUser, FaSignInAlt } from "react-icons/fa";
 
@@ -20,10 +22,24 @@ function Login() {
   const { username, password } = formData;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
-  const { user, isLoading, isSuccess, message } = useSelector(
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
+
+  useEffect(() => {
+    if (isError) {
+      // displays the error message in the console, will change this to alert
+      console.log(message);
+    }
+
+    // Redirect when logged in
+    if (isSuccess || user) {
+      navigate("/");
+    }
+    dispatch(reset());
+  }, [isError, isSuccess, user, message, navigate, dispatch]); 
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -41,6 +57,10 @@ function Login() {
     }
     dispatch(login(userData))
   };
+
+  if(isLoading){
+    return <Spinner />
+  }
 
   return (
     <div className="text-center log-card">

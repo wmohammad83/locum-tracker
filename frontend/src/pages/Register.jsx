@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import { useSelector, useDispatch } from "react-redux";
 import { register, reset } from "../features/auth/authSlice";
+import Spinner from "../components/Spinner"
 
 import { FaUser } from "react-icons/fa";
 
@@ -69,6 +70,10 @@ function Register() {
       dispatch(register(userData));
     }
   };
+
+  if(isLoading){
+    return <Spinner />
+  }
 
   return (
     <div className="text-center log-card">

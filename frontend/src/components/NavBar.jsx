@@ -15,10 +15,10 @@ function NavBar() {
   const { user } = useSelector((state) => state.auth);
 
   const onLogout = () => {
-    dispatch(logout())
-    dispatch(reset())
-    navigate("/login")
-  }
+    dispatch(logout());
+    dispatch(reset());
+    navigate("/login");
+  };
 
   return (
     <Navbar bg="light" expand="lg">
@@ -41,7 +41,10 @@ function NavBar() {
                 <Nav.Link as={Link} to="/expenses">
                   Expenses
                 </Nav.Link>
-                <NavDropdown title={`${user.firstname} ${user.lastname}`} id="basic-nav-dropdown">
+                <NavDropdown
+                  title={`${user.firstname} ${user.lastname}`}
+                  id="basic-nav-dropdown"
+                >
                   <NavDropdown.Item href="#action/3.1">
                     Profile
                   </NavDropdown.Item>
