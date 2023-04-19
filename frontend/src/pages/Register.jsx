@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
-import { useSelector, useDispatch } from "react-redux"
-import { register } from "../features/auth/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { register, reset } from "../features/auth/authSlice";
 
 import { FaUser } from "react-icons/fa";
 
@@ -21,11 +22,28 @@ function Register() {
   });
 
   // Destructuing
-  const { username, email, firstname, lastname, password, password2 } = formData;
+  const { username, email, firstname, lastname, password, password2 } =
+    formData;
 
-const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-const { user, isLoading, isSuccess, message } = useSelector(state => state.auth)
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      // displays the error message in the console, will change this to alert
+      console.log(message);
+    }
+
+    // Redirect when logged in
+    if (isSuccess || user) {
+      navigate("/");
+    }
+    dispatch(reset());
+  }, [isError, isSuccess, user, message, navigate, dispatch]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -46,9 +64,9 @@ const { user, isLoading, isSuccess, message } = useSelector(state => state.auth)
         email,
         firstname,
         lastname,
-        password
-      }
-      dispatch(register(userData))
+        password,
+      };
+      dispatch(register(userData));
     }
   };
 
