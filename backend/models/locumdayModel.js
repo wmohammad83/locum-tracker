@@ -25,6 +25,10 @@ const locumdaySchema = mongoose.Schema({
     miles: {
         type: Number,
         required: [true, 'Please add the distance travelled both ways'],
+    },
+    parking: {
+        type: Number,
+        // required: [true, 'Please add parking cost'],
     }
 },
 {

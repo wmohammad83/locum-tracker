@@ -2,6 +2,7 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 
 // Components
 import NavBar from "./components/NavBar";
+import PrivateRoute from "./components/PrivateRoute";
 
 // Pages
 import Dashboard from "./pages/Dashboard";
@@ -19,11 +20,17 @@ function App() {
      <Router>
       <NavBar />
       <Routes>
-        <Route path="/" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/expenses" element={<Expenses />} />
-        <Route path="/worked" element={<Worked />} />
+        <Route path="/" element={<PrivateRoute />} >
+          <Route path="/" element={<Dashboard />} />
+        </Route>
+        <Route path="/expenses" element={<PrivateRoute />} >
+          <Route path="/expenses" element={<Expenses />} />
+        </Route>
+        <Route path="/worked" element={<PrivateRoute />} >
+          <Route path="/worked" element={<Worked />} />
+        </Route>
       </Routes>
      </Router>
     </>

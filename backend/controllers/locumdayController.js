@@ -38,7 +38,7 @@ const getLocumday = asyncHandler(async (req, res) => {
 
     if(!locumday){
         res.status(404)
-        throw new Error('Locm day not found')
+        throw new Error('Locum day not found')
     }
 
     if(locumday.user.toString() !== req.user.id) {
@@ -55,13 +55,12 @@ const getLocumday = asyncHandler(async (req, res) => {
 // @access  Private
 const createLocumday = asyncHandler(async (req, res) => {
 
-    const {date, company, location, rate, miles} = req.body
+    const {date, company, location, rate, miles, parking} = req.body
 
-    if(!date || !company || !location || !rate || !miles) {
+    if(!date || !company || !location || !rate || !miles || !parking) {
         res.status(400)
         throw new Error('please add all fields')
     }
-
         // Get user using the id in the JWT
         const user = await User.findById(req.user.id)
 
@@ -76,6 +75,7 @@ const createLocumday = asyncHandler(async (req, res) => {
             location,
             rate,
             miles,
+            parking,
             user: req.user.id
         })
 
@@ -107,7 +107,6 @@ const deleteLocumday = asyncHandler(async (req, res) => {
     }
 
     await locumday.remove()
-
     res.status(200).json({success: true})
 })
 
@@ -134,10 +133,7 @@ const updateLocumday = asyncHandler(async (req, res) => {
         res.status(401)
         throw new Error('Not Authorized')
     }
-
-
     const updatedLocumday = await LocumDay.findByIdAndUpdate(req.params.id, req.body, { new: true })
-
     res.status(200).json(updatedLocumday)
 })
 
